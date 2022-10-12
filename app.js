@@ -59,7 +59,7 @@ app.get('/', async (req, res) => {
   // Use basic logger without HTTP request info
   logger.info({
     logField: 'custom-entry',
-    arbitraryField: 'custom-entry'
+    arbitraryField: 'custom-entry',
   }); // Example of structured logging
   // Use request-based logger with log correlation
 
