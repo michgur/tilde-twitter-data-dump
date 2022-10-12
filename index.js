@@ -16,6 +16,8 @@ const app = require('./app');
 const {logger, initLogCorrelation} = require('./utils/logging');
 const {fetchProjectId} = require('./utils/metadata');
 
+logger.info('hello')
+logger.info(app)
 /**
  * Initialize app and start Express server
  */
