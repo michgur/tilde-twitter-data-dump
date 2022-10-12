@@ -23,6 +23,8 @@ const queries = [
     'AI',
     'Natural Language Processing',
     'Artificial Intelligence',
+    'GPT3',
+    'DALLE',
     "@elonmusk",
     "Elon Musk",
     "Iphone",
