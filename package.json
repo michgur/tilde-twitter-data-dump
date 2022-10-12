@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Microservice template for Cloud Run",
   "main": "index.js",
-  "engines": {
-    "node": "16"
-  },
   "scripts": {
     "start": "node index.js",
     "dev": "NODE_ENV=development nodemon index.js | pino-pretty",
