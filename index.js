@@ -18,7 +18,7 @@ const {fetchProjectId} = require('./utils/metadata');
 
 logger.info('hello start')
 logger.info(app)
-logger.info(app ? 'true' : 'false')
+logger.info(Object.getOwnPropertyNames(app))
 logger.info('hello end')
 /**
  * Initialize app and start Express server
