@@ -67,7 +67,7 @@ app.get('/', async (req, res) => {
   req.log.info('Child logger with trace Id.'); // https://cloud.google.com/run/docs/logging#correlate-logs
   const query = queries[Math.floor(Math.random() * queries.length)];
   res.log.info(`making request, picked ${query}`);
-  twitterBQ(req, res); // res handled in twitter_bq.js
+  twitterBQ(query, res); // res handled in twitter_bq.js
 });
 
 module.exports = app;
