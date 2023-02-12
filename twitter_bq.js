@@ -3,6 +3,7 @@ const {Client} = require('twitter-api-sdk');
 const {BigQuery} = require('@google-cloud/bigquery');
 const {logger} = require('./utils/logging');
 
+// require('dotenv').config();
 const {LOCAL, BEARER_TOKEN, BQ_CREDENTIALS} = process.env;
 
 const options = LOCAL === 'true' ?
@@ -10,6 +11,7 @@ const options = LOCAL === 'true' ?
     {credentials: JSON.parse(BQ_CREDENTIALS)};
 const bigquery = new BigQuery(options);
 
+console.log(`using ${LOCAL === 'true' ? 'local' : 'cloud'} ${BEARER_TOKEN}`);
 const twitter = new Client(BEARER_TOKEN);
 
 function getUsername(users, id) {
@@ -18,7 +20,6 @@ function getUsername(users, id) {
 
 exports.twitterBQ = async function main(query, res) {
   let stream = undefined;
-  logger.info(BEARER_TOKEN);
   try {
     stream = twitter.tweets.tweetsRecentSearch({
       'query': `${query} lang:en -is:retweet -is:reply -is:quote is:verified`,

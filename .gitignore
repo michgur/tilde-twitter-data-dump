@@ -24,3 +24,6 @@ npm-debug.log
 
 # macOS
 **/.DS_Store
+test.js
+.env
+tilde-359707-fb327ebea274.json
