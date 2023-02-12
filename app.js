@@ -15,6 +15,7 @@
 const axios = require('axios');
 const express = require('express');
 const {pinoHttp, logger} = require('./utils/logging');
+const {twitterBQ} = require('./twitter_bq');
 
 const app = express();
 
@@ -24,6 +25,8 @@ const queries = [
   'Natural Language Processing',
   'Artificial Intelligence',
   'GPT3',
+  'ChatGPT',
+  'Midjouney',
   'DALLE',
   '@elonmusk',
   'Elon Musk',
@@ -34,11 +37,9 @@ const queries = [
   'Biden',
   'Meta',
   'Metaverse',
-  'Kanye',
   'NYC',
   'New York',
   'NFT',
-  'Iran',
   'Amazon',
   'AWS',
   'Alexa',
@@ -66,20 +67,7 @@ app.get('/', async (req, res) => {
   req.log.info('Child logger with trace Id.'); // https://cloud.google.com/run/docs/logging#correlate-logs
   const query = queries[Math.floor(Math.random() * queries.length)];
   res.log.info(`making request, picked ${query}`);
-  try {
-    await axios({
-      method: 'POST',
-      url: 'https://us-central1-tilde-359707.cloudfunctions.net/twitter-data-dump',
-      headers: {'Content-Type': 'application/json'},
-      data: {
-        'query': query,
-      },
-      timeout: 100000000,
-    });
-  } catch (e) {
-    res.log.info(e);
-  }
-  res.send('success!');
+  twitterBQ(req, res); // res handled in twitter_bq.js
 });
 
 module.exports = app;
