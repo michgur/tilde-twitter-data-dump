@@ -1,6 +1,7 @@
 /* eslint-disable require-jsdoc */
 const {Client} = require('twitter-api-sdk');
 const {BigQuery} = require('@google-cloud/bigquery');
+const {logger} = require('./utils/logging');
 
 const {LOCAL, BEARER_TOKEN, BQ_CREDENTIALS} = process.env;
 
@@ -17,6 +18,7 @@ function getUsername(users, id) {
 
 exports.twitterBQ = async function main(req, res) {
   if (!('query' in req.body)) {
+    logger.error('missing query');
     res.status(422).send('missing query');
   } else {
     let stream = undefined;
@@ -28,6 +30,7 @@ exports.twitterBQ = async function main(req, res) {
         'user.fields': ['username'],
       });
     } catch (e) {
+      logger.error(`failed to create tweet stream ${e.stack}`);
       res.status(500).send(`failed to create tweet stream ${e.stack}`);
       return;
     }
@@ -49,9 +52,11 @@ exports.twitterBQ = async function main(req, res) {
         console.log(JSON.stringify(bqRes, null, 4));
       }
     } catch (e) {
+      logger.error(`an error occured while processing tweets ${JSON.stringify(e, null, 4)} ${e.stack}`);
       res.status(500).send(`an error occured while processing tweets ${JSON.stringify(e, null, 4)} ${e.stack}`);
       return;
     }
+    logger.info(`successfuly added tweets`);
     res.status(200).send(`successfuly added tweets`);
   }
 };
