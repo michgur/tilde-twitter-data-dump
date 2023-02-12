@@ -18,6 +18,7 @@ function getUsername(users, id) {
 
 exports.twitterBQ = async function main(query, res) {
   let stream = undefined;
+  logger.info(BEARER_TOKEN);
   try {
     stream = twitter.tweets.tweetsRecentSearch({
       'query': `${query} lang:en -is:retweet -is:reply -is:quote is:verified`,
